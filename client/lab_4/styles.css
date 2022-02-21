@@ -72,32 +72,55 @@
   .grid-container {
     display: flex;
     justify-content: center;
+    align-items: center;   
+    overflow: hidden;
+    position: relative;
   }
-  
-  .grid {
+
+  .grid-container .carousel-item,
+  .grid-container .carousel-item--hidden{
+    display: none;
+  }
+
+  .grid-container .carousel-item img{
     width: 900px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    flex-direction: row;
-    flex-direction: row-reverse;
+    height: auto
   }
-  
-  .photo-grid-item {
-    border: 1px solid #fff;
-    width: 300px;
-    height: 300px;
+
+  .grid-container .carousel-item--visible{
+    display: block;
   }
-  
-  .first-item {
-    order: 1;
+
+  .grid-container  button {
+    border-radius: 5px;
+    border: 1px;
+    font-weight: bold;
+    width: 50px;
+    height: 25px;
   }
-  
-  .last-item {
-    order: -1;
+
+  .grid-container  button#carousel-button--previous {
+    margin-right: 5px;
   }
-  
+
+  .grid-container  button#carousel-button--next {
+    margin-left: 5px;
+  }
+
+  button:hover {
+    background-color: orange;
+  }
+
+  button:active {
+    border: 2px solid green;
+  }
+
+  button:focus {
+    background-color: orange;
+    border: 2px solid green;
+
+  }
+
   .footer {
     display: flex;
     justify-content: space-between;
