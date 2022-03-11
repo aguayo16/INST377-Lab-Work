@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let isGoingRight = false;
   let leftTimerId;
   let rightTimerId;
+  let score = 0;
 
   /* creates doodler object */
   function createDoodler() {
@@ -61,10 +62,20 @@ document.addEventListener('DOMContentLoaded', () => {
   /* make the platforms move */
   function movePlatforms() {
     if (DoodlerBottomSpace > 200) {
-      platforms.forEach(item => {
-        item.bottom -= 4;
-        let visual = item.visual;
-        visual.style.bottom = `${item.bottom}px`;
+      platforms.forEach(platform => {
+        platform.bottom -= 4;
+        let visual = platform.visual;
+        visual.style.bottom = `${platform.bottom}px`;
+
+        if (platform.bottom < 10) {
+          let firstPlatform = platforms[0].visual;
+          firstPlatform.classList.remove('platform');
+          platforms.shift();
+          console.log(platforms);
+          score++;
+          let newPlatform = new Platform(600);
+          platforms.push(newPlatform);
+        }
       });
     }
   }
@@ -115,8 +126,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function gameOver() {
     console.log('game over');
     isGameOver = true;
+    while (grid.firstChild) {
+      console.log('remove');
+      grid.removeChild(grid.firstChild);
+    }
+    grid.innerHTML = score;
     clearInterval(upTimerId);
     clearInterval(downTimerId);
+    clearInterval(leftTimerId);
+    clearInterval(rightTimerId);
   }
 
   // Allows us to move the doodle left,right, or straight
@@ -166,10 +184,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // function to make the doodler move straight
   function moveStraight() {
-    clearInterval(leftTimerId);
-    clearInterval(rightTimerId);
     isGoingRight = false;
     isGoingLeft = false;
+    clearInterval(leftTimerId);
+    clearInterval(rightTimerId);
   }
 
   function start() {
