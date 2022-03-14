@@ -1,36 +1,32 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-unused-vars */
-function getRandomIntInclusive(min, max) {
-  newMin = Math.ceil(min);
-  newMax = Math.floor(max);
-  return Math.floor(
-    Math.random() * (newMax - newMin + 1) + min
-  ); // The maximum is inclusive and the minimum is inclusive
-}
 
-function dataHandler(dataArray) {
-  console.log('fired dataHandler');
-  // console.table(dataArray); // this is called "dot notation"
+function dataHandler(array) {
+  console.table(array);
   const range = [...Array(15).keys()];
   const listItems = range.map((item, index) => {
-    const restNum = getRandomIntInclusive(0, dataArray.length - 1);
-    return dataArray[restNum];
+    const randNum = randomize(0, array.length - 1);
+    return array[randNum];
   });
 
-  // console.log(listItems);
   return listItems;
 }
 
-function createHtmlList(collection) {
-  console.log('fired HTML creator');
-  console.log(collection);
-  const targetList = document.querySelector('.resto-list');
-  targetList.innerHTML = '';
-  collection.forEach((item) => {
-    const {name} = item;
-    const displayName = name.toLowerCase();
-    const injectThisItem = `<li>${displayName}</li>`;
-    // const injectThisItem = '<li>${item.name}</li>';
-    targetList.innerHTML += injectThisItem;
+function randomize(min, max) {
+  minimum = Math.ceil(min);
+  maximum = Math.floor(max);
+  return Math.floor(
+    Math.random() * (maximum - minimum + 1) + min
+  );
+}
+
+function injectList(list) {
+  document.querySelector('.resto-list').innerHTML = '';
+  list.forEach((item) => {
+    const restName = item.name.toLowerCase();
+    const injectRestName = `<li>${restName}</li>`;
+    // const injectThisItem = `<li>${item.name}</li>`;
+    document.querySelector('.resto-list').innerHTML += injectRestName;
   });
 }
 
@@ -49,8 +45,7 @@ async function mainEvent() { // the async keyword means we can make API requests
 
       // arrayFromJson.data - we're accessing a key called 'data' on the returned object
       // it contains all 1,000 records we need
-      const setRest = dataHandler(arrayFromJson);
-      createHtmlList(setRest);
+      injectList(dataHandler(arrayFromJson));
     });
   }
 }
