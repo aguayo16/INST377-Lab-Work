@@ -132,7 +132,7 @@
   
     color: #FFFFFF;
     background-color:mediumaquamarine;
-  
+    
     border: none;
     border-radius: 5px;
   
@@ -161,6 +161,7 @@
       height: 50px;
     
       display: flex;
+      
       align-items: center;
     }
   
