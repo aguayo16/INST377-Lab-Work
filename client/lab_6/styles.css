@@ -159,11 +159,7 @@
       color: grey;
       margin-top: 0px;
       margin-left: 25px;
-      
-    
-      display: flex;
-      
-      align-items: center;
+      display: block;
     }
   
   
