@@ -4,30 +4,28 @@
 function dataHandler(array) {
   console.table(array);
   const range = [...Array(15).keys()];
+  // sets a random list of restaurant names
   const listItems = range.map((item, index) => {
     const randNum = randomize(0, array.length - 1);
     return array[randNum];
   });
-
-  return listItems;
+  // injects the random array into the list
+  document.querySelector('.resto-list').innerHTML = '';
+  listItems.forEach((item) => {
+    const restName = item.name.toLowerCase();
+    const injectRestName = `<li>${restName}</li>`;
+    // const injectThisItem = `<li>${item.name}</li>`;
+    document.querySelector('.resto-list').innerHTML += injectRestName;
+  });
 }
 
+// function that randomizes given a min and a max
 function randomize(min, max) {
   minimum = Math.ceil(min);
   maximum = Math.floor(max);
   return Math.floor(
     Math.random() * (maximum - minimum + 1) + min
   );
-}
-
-function injectList(list) {
-  document.querySelector('.resto-list').innerHTML = '';
-  list.forEach((item) => {
-    const restName = item.name.toLowerCase();
-    const injectRestName = `<li>${restName}</li>`;
-    // const injectThisItem = `<li>${item.name}</li>`;
-    document.querySelector('.resto-list').innerHTML += injectRestName;
-  });
 }
 
 async function mainEvent() { // the async keyword means we can make API requests
@@ -45,7 +43,7 @@ async function mainEvent() { // the async keyword means we can make API requests
 
       // arrayFromJson.data - we're accessing a key called 'data' on the returned object
       // it contains all 1,000 records we need
-      injectList(dataHandler(arrayFromJson));
+      dataHandler(arrayFromJson);
     });
   }
 }
