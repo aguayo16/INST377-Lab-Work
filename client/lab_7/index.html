@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Luis Aguayo's Lab 5</title>
+    <!--Bulma.io link-->
+    <link rel="stylesheet" href="styles.css" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="name">Luis Aguayo's Lab 5</div>
+
+      <div class="columns">
+        
+          <form
+            method="get"
+            class="user-form"
+          >
+            <div class="form-row">
+              <label for="rest-name"><strong>Restaurant Name</strong></label>
+              <input id="rest-name" name="rest-name" type="text" />
+
+              <label for="city"
+                ><strong>City</strong></label
+              >
+              <input id="city" name="city" type="text" />
+            </div>
+
+            <fieldset class="legacy-form-row">
+              <legend><strong>Veggie or Vegan?</strong></legend>
+              <label for="talk-type-1" class="radio-label">Yes</label>
+              <input
+                id="talk-type-1"
+                name="talk-type"
+                type="radio"
+                value="Yes"
+              />
+
+              <label for="talk-type-2" class="radio-label">No</label>
+              <input
+                id="talk-type-2"
+                name="talk-type"
+                type="radio"
+                value="No"
+                checked
+              />
+            </fieldset>
+
+            <div class="form-row">
+              <button>Load List</button>
+            </div>
+          </form>
+       
+
+          <div class="container-bar">
+            <div class="container">
+              <h4>Restaurant List</h4>
+              <ul class='resto-list'>
+  
+              </ul>
+              
+          </div>
+        
+      </div>
+    </div>
+    <script src="script.js" charset="UTF-8"></script>
+  </body>
+</html>
