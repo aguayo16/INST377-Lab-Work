@@ -67,6 +67,7 @@
     border: 1px solid #D6D9DC;
     border-radius: 10px;
     
+    height: 320px;
     width: 225px;
     padding: 20px 30px;
     
@@ -147,6 +148,13 @@
     border: 2px solid black;
   }
   
+  .resto-list {
+   list-style: none;
+  }
+
+  .li-zip {
+    margin-bottom: 10px;
+  }
   
   @media only screen and (min-width: 700px) {
   
