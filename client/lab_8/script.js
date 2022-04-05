@@ -87,7 +87,7 @@ async function mainEvent() { // the async keyword means we can make API requests
   const storedDataArray = JSON.parse(storedDataString); // Converts the stored data to an array
   console.log(storedDataArray);
 
-  if (storedDataArray.length > 0) {
+  if (storedDataString.length > 0) {
     submitButton.style.display = 'block';
 
     form.addEventListener('submit', async (submitEvent) => { // async has to be declared all the way to get an await
