@@ -1,3 +1,5 @@
+/* eslint-disable arrow-parens */
+/* eslint-disable max-len */
 /* eslint-disable no-const-assign */
 /* eslint-disable array-callback-return */
 /* eslint-disable arrow-body-style */
@@ -38,8 +40,21 @@ function randomize(min, max) {
   );
 }
 
+// marks the restaurants on our current map
+function markerPlace(map, collection) {
+  console.log('fires map markers');
+
+  collection.forEach(item => {
+    const point = item.geocoded_column_1?.coordinates;
+    let restCordinates = [point[1], point[0]]; // Transverses the coordinates of each restaurant
+    console.log(restCordinates);
+    L.marker(restCordinates).addTo(map);
+  });
+}
+
+// Crreates Map
 function initMap() {
-  const map = L.map('map').setView([51.505, -0.09], 13);
+  const map = L.map('map').setView([38.9897, -76.9378], 13);
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -57,13 +72,22 @@ async function mainEvent() { // the async keyword means we can make API requests
 
   const restNameInput = document.querySelector('#rest-name');
   const zipCodeInput = document.querySelector('#zip-code');
-  initMap();
-
+  let restVar = 'restaurants';
+  const pageMap = initMap();
   submitButton.style.display = 'none';
-  const results = await fetch('https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json'); // This accesses some data from our API
-  const arrayFromJson = await results.json(); // This changes it into data we can use - an object
 
-  if (arrayFromJson.length > 0) {
+  // if we dont have the data stored in our browser we load the data from the API
+  if (localStorage.getItem(restVar) === undefined) {
+    const results = await fetch('https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json'); // This accesses some data from our API
+    const arrayFromJson = await results.json(); // This changes it into data we can use - an object
+    localStorage.setItem(restVar, JSON.stringify(arrayFromJson)); // Accesses and stores the loaded data locally
+  }
+  // if we do have our data stored on ourr browser we can just grab it
+  const storedDataString = localStorage.getItem(restVar); // Reads the stored data and returns it
+  const storedDataArray = JSON.parse(storedDataString); // Converts the stored data to an array
+  console.log(storedDataArray);
+
+  if (storedDataArray.length > 0) {
     submitButton.style.display = 'block';
 
     form.addEventListener('submit', async (submitEvent) => { // async has to be declared all the way to get an await
@@ -74,15 +98,16 @@ async function mainEvent() { // the async keyword means we can make API requests
       // it contains all 1,000 records we need
 
       // gives us the randomly generated restaurant list
-      currentArray = dataHandler(arrayFromJson);
+      currentArray = dataHandler(storedDataArray);
       injectRandRestList(currentArray);
+      markerPlace(pageMap, currentArray);
     });
 
     let currentArray = [];
     restNameInput.addEventListener('input', async (e) => {
       console.log(e.target.value);
       // console.log(currentArray);
-      if (arrayFromJson.length < 1) {
+      if (storedDataArray.length < 1) {
         console.log('empy');
         return;
       }
@@ -101,7 +126,7 @@ async function mainEvent() { // the async keyword means we can make API requests
     zipCodeInput.addEventListener('input', (e) => {
       console.log(e.target.value);
 
-      if (arrayFromJson.length < 1) {
+      if (storedDataArray.length < 1) {
         console.log('empty');
         return;
       }
