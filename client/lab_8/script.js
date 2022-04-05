@@ -38,12 +38,26 @@ function randomize(min, max) {
   );
 }
 
+function initMap() {
+  const map = L.map('map').setView([51.505, -0.09], 13);
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw'
+  }).addTo(map);
+  return map;
+}
+
 async function mainEvent() { // the async keyword means we can make API requests
   const form = document.querySelector('.user-form');
   const submitButton = document.querySelector('button');
 
   const restNameInput = document.querySelector('#rest-name');
   const zipCodeInput = document.querySelector('#zip-code');
+  initMap();
 
   submitButton.style.display = 'none';
   const results = await fetch('https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json'); // This accesses some data from our API
