@@ -43,7 +43,11 @@ function randomize(min, max) {
 // marks the restaurants on our current map
 function markerPlace(map, collection) {
   console.log('fires map markers');
-
+  map.eachLayer((layer) => {
+    if (layer instanceof L.Marker) {
+      layer.remove();
+    }
+  });
   collection.forEach(item => {
     const point = item.geocoded_column_1?.coordinates;
     let restCordinates = [point[1], point[0]]; // Transverses the coordinates of each restaurant
@@ -101,7 +105,7 @@ async function mainEvent() { // the async keyword means we can make API requests
       // gives us the randomly generated restaurant list
       currentArray = dataHandler(storedDataArray);
       injectRandRestList(currentArray);
-      markerPlace(pageMap, currentArray);
+      // markerPlace(pageMap, currentArray);
     });
 
     let currentArray = [];
@@ -122,7 +126,7 @@ async function mainEvent() { // the async keyword means we can make API requests
       });
       console.log(targetRest);
       injectRandRestList(targetRest);
-      // markerPlace(pageMap, targetRest);
+      markerPlace(pageMap, targetRest);
     });
 
     zipCodeInput.addEventListener('input', (e) => {
