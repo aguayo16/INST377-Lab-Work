@@ -77,17 +77,18 @@ async function mainEvent() { // the async keyword means we can make API requests
   submitButton.style.display = 'none';
 
   // if we dont have the data stored in our browser we load the data from the API
-  if (localStorage.getItem(restVar) === undefined) {
+  if (localStorage.getItem(restVar) === null) { // was set as 'undefined' beforre but did not work
     const results = await fetch('https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json'); // This accesses some data from our API
     const arrayFromJson = await results.json(); // This changes it into data we can use - an object
     localStorage.setItem(restVar, JSON.stringify(arrayFromJson)); // Accesses and stores the loaded data locally
+    console.log('fires localStorage');
   }
   // if we do have our data stored on ourr browser we can just grab it
   const storedDataString = localStorage.getItem(restVar); // Reads the stored data and returns it
   const storedDataArray = JSON.parse(storedDataString); // Converts the stored data to an array
   console.log(storedDataArray);
 
-  if (storedDataString.length > 0) {
+  if (storedDataArray.length > 0) {
     submitButton.style.display = 'block';
 
     form.addEventListener('submit', async (submitEvent) => { // async has to be declared all the way to get an await
@@ -121,6 +122,7 @@ async function mainEvent() { // the async keyword means we can make API requests
       });
       console.log(targetRest);
       injectRandRestList(targetRest);
+      // markerPlace(pageMap, targetRest);
     });
 
     zipCodeInput.addEventListener('input', (e) => {
