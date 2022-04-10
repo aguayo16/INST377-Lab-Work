@@ -105,7 +105,7 @@ async function mainEvent() { // the async keyword means we can make API requests
       // gives us the randomly generated restaurant list
       currentArray = dataHandler(storedDataArray);
       injectRandRestList(currentArray);
-      // markerPlace(pageMap, currentArray);
+      markerPlace(pageMap, currentArray);
     });
 
     let currentArray = [];
